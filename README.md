@@ -13,7 +13,12 @@
 |Deletar| OK |
 
 ## CRUD de Motocicletas
-    Em breve
+|Ação|Status|
+|--|--|
+|Criar| OK |
+|Ler| OK |
+|Atualizar| OK |
+|Deletar| OK |
 
 ## Venda de Motocicletas
     Em breve
