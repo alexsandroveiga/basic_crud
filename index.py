@@ -16,11 +16,11 @@ while True:
     try:
       option = int(input('Escolha uma opção: '))
     except:
-      print('Opção inválida, digite um número de 1 a 5...')
+      print('Opção inválida, digite um número de 1 a 5...\n')
   if option == 1:
     customer_view()
   elif option == 2:
-    print('Crud de motos')
+    motorcycle_view()
   elif option == 3:
     print('Vendas em breve...')
     exit()

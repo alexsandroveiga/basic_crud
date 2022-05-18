@@ -1,7 +1,5 @@
 from utils import *
-from models import Customer
-
-from terminaltables import SingleTable
+from models import *
 
 customerRepo = Customer()
 
@@ -15,51 +13,63 @@ options = {
   7: 'Sair'
 }
 
+table_items = {
+  'id': 'Id',
+  'name': 'Nome',
+  'email': 'Email',
+  'phone': 'Telefone',
+  'address': 'Endereço'
+}
+
 def customer_view():
-  show_menu(options)
-  option = ''
-  while option not in options.keys():
+  while True:
+    show_menu(options)
     try:
       option = int(input('Escolha uma opção: '))
     except:
-      print('Opção inválida, digite um número de 1 a 6...')
+      print('Opção inválida, digite um número de 1 a 6...\n')
     if option == 1:
       customer = customerRepo.create(
         name=input('Nome: '),
         email=input('Email: '),
         phone=input('Telefone: '),
         address=input('Endereço: ')
-      )
-      
-      return adapt_table('Novo cliente', format_table_header(customer), [customer])
+      )      
+      adapt_table('Cliente', format_table_header(customer, table_items), [customer])
     if option == 2:
       customers = customerRepo.read()
-      return adapt_table('Clientes', format_table_header(customers[0]), customers)
+      if customers.__len__() != 0:
+        adapt_table('Clientes', format_table_header(customers[0], table_items), customers)
+      else:
+        print('Nenhum cliente cadastrado.\n')
     if (option == 3):
-      try:
-        customer = customerRepo.findByEmail(input('Email: '))
-        return adapt_table('Cliente encontrado', format_table_header(customer), [customer])
-      except:
-        print('Cliente não encontrado')
+      customer = customerRepo.findByEmail(input('Email: '))
+      if customer:
+        adapt_table('Cliente', format_table_header(customer, table_items), [customer])
+      else:
+        print('Cliente não encontrado.\n')
     if (option == 4):
-      try:
+      customer = customerRepo.find(input('Id: '))
+      if customer:
         customer = customerRepo.update(
-          id=input('ID: '),
+          id=customer['id'],
           name=input('Nome: '),
           email=input('Email: '),
           phone=input('Telefone: '),
           address=input('Endereço: ')
         )
-        return adapt_table('Clientes', format_table_header(customer), [customer])
-      except:
-        print('Cliente não encontrado')
+        adapt_table('Cliente', format_table_header(customer, table_items), [customer])
+      else:
+        print('Cliente não encontrado.\n')
     if (option == 5):
-      try:
-        customerRepo.delete()
-        print('Cliente deletado com sucesso!')
-      except:
-        print('Cliente não encontrado')
+      customer = customerRepo.find(input('Id: '))
+      if customer:
+        customerRepo.delete(customer['id'])
+        print('Cliente deletado com sucesso!\n')
+      else:
+        print('Cliente não encontrado.\n')
     if option == 6:
       break
     if option == 7:
+      print('Obrigado por usar nosso sistema!')
       exit()

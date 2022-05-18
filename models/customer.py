@@ -3,7 +3,7 @@ from uuid import uuid4
 customers = []
 
 class Customer:
-  def create(self, name: str, email: str, phone: str, address: str):
+  def create(self, name, email, phone, address):
     customers.append({
       'id': str(uuid4()),
       'name': name,
@@ -23,6 +23,11 @@ class Customer:
       if customer['email'] == email:
         return customer
 
+  def find(self, id):
+    for customer in customers:
+      if customer['id'] == id:
+        return customer
+
   def update(self, id, name, email, phone, address):
     for customer in customers:
       if customer['id'] == id:
@@ -30,10 +35,10 @@ class Customer:
         customer['email'] = email
         customer['phone'] = phone
         customer['address'] = address
-    return customer
+        return customer
 
-  def delete(self, id: str):
+  def delete(self, id):
     for customer in customers:
       if customer['id'] == id:
         customers.remove(customer)
-    return None
+        return None

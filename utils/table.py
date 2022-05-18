@@ -1,17 +1,9 @@
 from terminaltables import SingleTable
 
-table_items = {
-  'id': 'ID',
-  'name': 'Nome',
-  'email': 'Email',
-  'phone': 'Telefone',
-  'address': 'Endereço'
-}
-
-def format_table_header(item):
+def format_table_header(item, headers):
   table_header = {}
   for key in item.keys():
-    table_header[key] = table_items[key]
+    table_header[key] = headers[key]
   return table_header.values()
 
 def adapt_table (title: str, headers: list[str], rows):
